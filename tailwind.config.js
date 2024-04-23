@@ -29,6 +29,12 @@ module.exports = {
           800: "#1e40af",
           900: "#1e3a8a",
         },
+        "login-blue":  "#219EBC",
+        "prueba": "#fca5a5",
+        "avion-blue": "#003D79",
+        "dark-gray": "#575757",
+        "facebook-logo": "#039BE5",
+        "otro-azul": "#0077B6",
       },
       fontFamily: {
         body: [

@@ -87,8 +87,49 @@ ul {
   transition: transform 0.3s ease;
 }
 
+.text-xxs {
+  font-size: 0.7rem;
+}
+
+.log-btn {
+  border-radius: 20px;
+  padding: 5px 10px;
+  background-color: white;
+  color: #575757;
+  font-size: 13px;
+  border: 1px solid #858585;
+  transition: transform 0.3s ease; 
+}
+
+.log-btn:hover {
+  transform: scale(1.1); 
+}
+
+.nav-btn {
+  border-radius: 20px;
+  background-color: #0077B6;
+  color: white;
+  font-size: 13px;
+  transition: transform 0.3s ease;
+}
+
+.nav-btn2 {
+  border-radius: 20px;
+  padding: 6px 80px;
+  background-color: #0077B6;
+  color: white;
+  font-size: 15px;
+  transition: transform 0.3s ease;
+}
+
+.nav-btn:hover {
+  transform: scale(1.1); 
+}
+
+
 @media (min-width: 1100px) {
-  .form-container{ 
+
+  #register.form-container, #login-container.form-container{ 
     justify-content: center;
     align-items: center;
     max-width: 50%;
