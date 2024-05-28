@@ -188,6 +188,8 @@ const Page = ({ params }: { params: { id: string } }) => {
         });
         if (!personResponse.ok) {
             throw new Error('Person creation failed');
+        }else{
+            window.alert('Persona agregada correctamente');
         }
     }
 
