@@ -18,8 +18,8 @@ import {
 } from '@mui/material';
 
 import React, { useEffect, useState } from 'react';
-import { getUsersRoles, updateRole } from 'app/api/userService';
 import { UserRole } from 'app/api/types';
+import { getUsersRoles, updateRole } from 'app/api/userService';
 import Navbar from 'components/Navbar';
 
 const textStyle = { fontFamily: 'Roboto, sans-serif', margin: "15px 0px" };
