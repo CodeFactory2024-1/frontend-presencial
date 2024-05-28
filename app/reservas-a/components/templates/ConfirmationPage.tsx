@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 import { postBooking } from "app/reservas-a/api/booking/endpoints/post"
 import { postBookingPassenger } from "app/reservas-a/api/bookingPassenger/endpoints/post"
+import { getFlights } from "app/reservas-a/api/flights/endpoints/get" // Remove when the connection with flight module is done
+import Flight from "app/reservas-a/api/flights/interface/flight"
 import { postPassenger } from "app/reservas-a/api/passenger/endpoints/post"
 import { postPerson } from "app/reservas-a/api/person/endpoints/post"
 import { Person } from "app/reservas-a/api/person/interface/person"
@@ -19,18 +21,27 @@ const ConfirmationPage: React.FC = () => {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
+  const [flights, setFlights] = useState<Flight[]>([])
+
   useEffect(() => {
     const dataString = localStorage.getItem("passengersToConfirm")
     if (dataString) {
       const data = JSON.parse(dataString) as Person[]
       setPassengersData(data)
     }
+
+    // Remove when the connection with flight module is done
+    // Use to simulate the flight assignment to the booking
+    getFlights()
+      .then((data) => setFlights(data))
+      .catch((error) => console.error("Error obtaining flights", error))
   }, [])
 
   const handleConfirmClick = async () => {
     // postBooking
     const bookingId = await postBooking({
-      flightId: "1",
+      // Random flightId from a random flight from the flights array
+      flightId: flights[Math.floor(Math.random() * flights.length)]?.id || 47,
       booking_date: new Date().toISOString(),
       booking_status: "Pending",
       total_price: passengers.length * 100,
@@ -69,17 +80,13 @@ const ConfirmationPage: React.FC = () => {
     router.push("/reservas-a/history")
   }
 
-  const handleHistoryClick = () => {
-    router.push("/reservas-a/history")
-  }
-
   const handleBackClick = () => {
     router.push("/reservas-a")
   }
 
   return (
     <div>
-      <SitasAppBar onHistoryClick={handleHistoryClick} onBackClick={handleBackClick} />
+      <SitasAppBar onBackClick={handleBackClick} />
       <br></br>
       <br></br>
       <SectionTitle text="Confirmar Datos" id="confirm-title" />
