@@ -1,9 +1,14 @@
 'use client';
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState} from 'react';
 import { BtnGuardar } from '@components/atoms/buttons';
 import { PrincipalText, Subtitle } from '@components/atoms/text';
 
 export default function FlightForm(){
+
+    interface LoginResponse {
+        token: string; // Asegúrate de que el tipo del token sea el correcto
+        // Otros campos si los hay
+    }
 
     interface FlightData {
         id: number;
@@ -32,7 +37,38 @@ export default function FlightForm(){
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [flightNumber, setFlightNumber] = useState<string | null>(null);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [token, setToken] = useState<string | null>(null);
 
+    useEffect(() => {
+        const login = async () => {
+            try {
+                const response = await fetch('https://codefact.udea.edu.co/modulo-01/public/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: 'pedro@pedro.com',
+                        password: 'luisPACO1*'
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json(); // TypeScript infiere data como tipo unknown
+                    const loginResponse = data as LoginResponse; // Type assertion para convertir data a LoginResponse
+                    const token = loginResponse.token; // Accede al token de manera segura
+                    setToken(token);
+                    console.log(token);
+                } else {
+                    throw new Error('Error al iniciar sesión');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        login();
+    }, []);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -83,14 +119,24 @@ export default function FlightForm(){
             }]
         };
 
+        
+
+
+        const headers: HeadersInit = {
+            'ContentType':'application/json'
+        };
+        if (token){
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
         try {
-            const response = await fetch('https://codefact.udea.edu.co/modulo-18/api/v1/flights', {
+            
+            const response = await fetch('https://codefact.udea.edu.co/modulo-17/api/v1/flights', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: headers,
                 body: JSON.stringify(flightData)
             });
+
     
             if (response.ok) {
 
