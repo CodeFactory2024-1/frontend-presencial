@@ -1,5 +1,6 @@
+import {Button, Box ,Stack , Typography, TextField, } from '@mui/material';
 import React, { useState } from 'react';
-import { Typography, Stack , TextField, Button, Box } from '@mui/material';
+
 import apiClient from 'app/api/apiClient';
 
 
@@ -26,14 +27,14 @@ const validatePassword = (password: string) => {
 }
 
 const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  setPassword(e.target.value);
+  setNewPassword(e.target.value);
   validatePassword(e.target.value);
   setPasswordError("");
 };
 
 const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   setConfirmPassword(e.target.value);
-  if (e.target.value !== newPassword) {
+  if (confirmPassword !== newPassword) {
     setConfirmPasswordError("Las contraseñas no coinciden")
   } else {
     setConfirmPasswordError("")
@@ -86,7 +87,7 @@ const handleSaveClick = async()  => {
               required
               variant="outlined"
               style={{ margin: "10px auto" }}
-              onChange={(e)=>{setConfirmPassword(e.target.value)}}
+              onChange={handleConfirmPasswordChange}
               error={!!confirmPasswordError}
               helperText={confirmPasswordError}
             />
