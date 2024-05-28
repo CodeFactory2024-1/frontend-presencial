@@ -18,7 +18,7 @@ function Navbar() {
         <div className='flex flex-col justify-center items-center h-auto w-full '>
             <nav className="flex flex-row w-full h-16 justify-between items-center bg-[#2196F3]">
                 <MenuIcon className='w-12 h-12 ml-5 cursor-pointer text-white' onClick={handleToggle} />
-                <Link className="text-center text-white text-2xl font-bold" href="/reservaB">
+                <Link className="text-center text-white text-2xl font-bold" href="/reservaB/formReservaB">
                     Reservar
                 </Link>
                 <AccountCircleIcon className='w-12 h-12 mr-5 cursor-pointer text-white' />

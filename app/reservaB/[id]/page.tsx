@@ -28,7 +28,6 @@ const Page = ({ params }: { params: { id: string } }) => {
 
     useEffect(() => {
         getBookings();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     if (Array.isArray(bookings)) {
@@ -73,6 +72,9 @@ const Page = ({ params }: { params: { id: string } }) => {
     };
 
     const handleCancelBooking = async (bookingId: number, flightId: number, bookingDate: string, totalPrice: number ) => {
+        if (!window.confirm('¿Estás seguro de que quieres cancelar esta reserva?')) {
+            return;
+        }
 
         const loginResponse = await fetch('https://codefact.udea.edu.co/modulo-02/api/login', {
             method: 'POST',

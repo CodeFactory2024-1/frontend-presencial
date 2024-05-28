@@ -77,7 +77,7 @@ function Menu({ isOpen, handleToggle }: MenuProps) {
                     </ListItem>
                     <ListItem button>
                         <ListItemIcon><BookIcon /></ListItemIcon>
-                        <Link href="/reservaB">
+                        <Link href="/reservaB/1">
                             <ListItemText className='text-2xl font-bold' primary='Reservas' />
                         </Link>
                     </ListItem>

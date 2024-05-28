@@ -32,7 +32,6 @@ const Page = ({ params }: { params: { id: string } }) => {
         });
     };
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const getPassengers = async () => {
         await fetch('https://codefact.udea.edu.co/modulo-09/v1/bookingPassenger/findPassengersByBooking/' + params.id).then(async (passengersResponse) => {
             if (!passengersResponse.ok) {
@@ -42,7 +41,6 @@ const Page = ({ params }: { params: { id: string } }) => {
         });
     };
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const getPersons = async () => {
         const personsPromises = passengers.map(async (passenger) => {
             const personResponse = await fetch('https://codefact.udea.edu.co/modulo-09/v1/person/' + passenger.personId);
@@ -59,16 +57,13 @@ const Page = ({ params }: { params: { id: string } }) => {
     useEffect(() => {
         getBooking();
         getPassengers();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
         getPersons();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [passengers]);
 
     if (Array.isArray(passengers)) {
-        // eslint-disable-next-line array-callback-return
         passengers.map((passengerItem, index) => {
             console.log(`passenger ${index}:`, passengerItem);
         });
@@ -77,7 +72,6 @@ const Page = ({ params }: { params: { id: string } }) => {
     }
 
     if (Array.isArray(persons)) {
-        // eslint-disable-next-line array-callback-return
         persons.map((personsItem, index) => {
             console.log(`persons ${index}:`, personsItem);
         });
@@ -85,12 +79,10 @@ const Page = ({ params }: { params: { id: string } }) => {
         console.log('persons is not an array');
     }
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [viewInfo, setViewInfo] = useState(false);
     const handleViewInfo = () => {
         setViewInfo(!viewInfo);
     }
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [viewEmerg, setViewEmerg] = useState(false);
     const handleViewEmerg = () => {
         setViewEmerg(!viewEmerg);
@@ -103,7 +95,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                 <ReservaIdButton
                     className="flex flex-row justify-center items-center w-auto h-12 bg-[#2196F3] rounded-full shadow-lg px-5 text-white font-semibold"
                     icon={<EditIcon className="text-white" />}
-                    link='/reservaB/formReservaB'
+                    link={'/reservaB/edit/' + params.id} 
                 >
                     Editar
                 </ReservaIdButton>
@@ -197,9 +189,6 @@ const Page = ({ params }: { params: { id: string } }) => {
                         <input type="text" className='flex flex-col w-full h-16 rounded-xl border p-3 text-gray-400 ' value="Cll 44 #44-44" readOnly />
                     </li>
                 </ul>}
-            </section>
-            <section className='flex flex-row w-10/12 h-auto items-center justify-center p-3 mb-20'>
-                <button className='w-40 h-12 flex flex-row p-3 justify-center items-center bg-gray-400 rounded-xl text-white font-bold'>Guardar <SaveAltIcon className='text-white ml-2' /></button>
             </section>
         </div >
     );
