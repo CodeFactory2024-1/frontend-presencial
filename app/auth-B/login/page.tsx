@@ -1,15 +1,12 @@
 "use client"
-import { Avatar, Checkbox, Container, FormControlLabel, Link, TextField } from "@mui/material"
+import { Checkbox, Container, FormControlLabel, Link, TextField } from "@mui/material"
 import { Button, Grid, Typography } from "@mui/material"
 import { blue } from "@mui/material/colors"
 import { GoogleOAuthProvider } from "@react-oauth/google"
 import backgroundImage from "../../assets/asset-avion.png"
-import facebook from "../../assets/asset-facebook.png"
-import github from "../../assets/asset-github.png"
 import AuthWithGoogle from "../googleLogin/authGoogle"
 import { login } from "app/api/userService"
 import { useState } from "react"
-import { set } from "zod"
 import { setAuthToken } from "app/api/apiClient"
 
 export default function Login() {

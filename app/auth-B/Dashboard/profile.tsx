@@ -1,11 +1,11 @@
+import { Avatar, Button,Container,FormControl, Grid, InputLabel, MenuItem,Select, Stack,  TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Avatar, Button, Grid, MenuItem, Stack, Select, TextField, Typography, Divider, Container, InputLabel, FormControl } from '@mui/material';
 import { getUserinfo, putUserInfo } from 'app/api/userService';
 import DatePickerComponent from 'components/DatePicker';
 
-const paperStyle = { padding: 20, border: "1px solid #c2c2c2", borderRadius: "10px" };
+
 const textStyle = { fontFamily: 'Roboto, sans-serif', margin: "15px 0px", fontweight: 'bold'};
-const inputs = { display: 'flex', alignItems: 'center' };
+
 
 const UserProfile: React.FC = () => {
   const [userInfo, setUserInfo] = useState({

@@ -1,15 +1,29 @@
 "use client"
-import React, { useEffect, useState } from 'react';
-import { Button, Grid, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField, Typography } from '@mui/material';
-import Navbar from 'components/Navbar';
-import { getUsersRoles, updateRole } from 'app/api/userService';
-import { UserRole } from 'app/api/types';
+import { 
+  Button, 
+  Grid, 
+  MenuItem, 
+  Paper, 
+  Select, 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableContainer, 
+  TableFooter, 
+  TableHead, 
+  TablePagination, 
+  TableRow, 
+  TextField, 
+  Typography 
+} from '@mui/material';
 
-const paperStyle = { padding: 20, width: "50%", margin: "7% auto", border: "1px solid #c2c2c2", borderRadius: "10px" };
-const title = { fontWeight: "bold" };
+import React, { useEffect, useState } from 'react';
+import { UserRole } from 'app/api/types';
+import { getUsersRoles, updateRole } from 'app/api/userService';
+import Navbar from 'components/Navbar';
+
 const textStyle = { fontFamily: 'Roboto, sans-serif', margin: "15px 0px" };
 
-const select = { height: "40px" };
 
 export default function Authorization() {
   const [page, setPage] = useState(0);

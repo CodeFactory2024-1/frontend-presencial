@@ -1,5 +1,5 @@
 import apiClient from './apiClient';
-import { User, UpdateRolePayload, UserRole } from './types';
+import { User,UserRole } from './types';
 
 
 export const resetPassword = async (newPassword:string, currentPassword:string) => {
