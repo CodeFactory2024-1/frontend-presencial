@@ -28,7 +28,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
         onChange={handleChange}
         className="border border-gray-300 px-36 py-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-xl text-center"
       />
-      <button
+      <button id="btnBuscar"
         type="submit"
         className="bg-primary text-white px-4 py-2 rounded-md ml-2"
       >
