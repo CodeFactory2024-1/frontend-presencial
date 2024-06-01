@@ -6,6 +6,7 @@ import { getBookingInfo } from "../services/services"
 import { BookingInfo } from "../utils/types"
 import useFetching from "../hooks/useStateFetch"
 import useGestionSeatStore from "../useGestionSeatStore"
+import { set } from "zod"
 
 interface Props {
   reserva: string
@@ -26,6 +27,7 @@ const GestionAsientosPage = ({ reserva }: Props) => {
       return
     }
     setError(response.data as string)
+    setIsLoading(false)
   }
 
   useEffect(() => {
