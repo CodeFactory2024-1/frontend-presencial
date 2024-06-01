@@ -1,8 +1,6 @@
 import { create } from "zustand"
 import { BookingInfo, Passanger, Seat } from "./utils/types"
 
-// Se empieza a hacer la integración con el backend
-
 interface Store {
   booking: BookingInfo | undefined
   listPassanger: Passanger[]
