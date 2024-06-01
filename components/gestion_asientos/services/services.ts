@@ -1,4 +1,4 @@
-import { RequestResponse, http } from "../utils/http"
+import { http, RequestResponse } from "../utils/http"
 import { AxiosError } from "axios"
 import { BookingInfo, Passanger, PassengerInfo, Seat } from "../utils/types"
 
