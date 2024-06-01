@@ -70,7 +70,7 @@ const PassengerList = () => {
       </section>
       {isOpen && (
         <Modal closeModal={closeModal}>
-          <Summary />
+          <Summary closeModal={closeModal} />
         </Modal>
       )}
     </>

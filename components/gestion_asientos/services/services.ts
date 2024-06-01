@@ -47,3 +47,24 @@ export const getSeatList = async (fligthId: number): Promise<RequestResponse<Sea
     return { data: errorMessage, status: false }
   }
 }
+
+export const changeSeatPassenger = async (
+  passengerId: number,
+  seatId: number
+): Promise<
+  RequestResponse<{
+    seatId: number
+    passengerId: number
+  }>
+> => {
+  try {
+    const response = await http.put(`/seats/change/${seatId}/passenger/${passengerId}`)
+    const { data } = response
+    const updateSeat = data.body
+    return { data: updateSeat, status: true }
+  } catch (e) {
+    const error = e as AxiosError
+    const errorMessage = error.response?.data.message || "Ha ocurrido un error inesperado. Por favor, intenta de nuevo."
+    return { data: errorMessage, status: false }
+  }
+}

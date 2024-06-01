@@ -2,6 +2,7 @@ import { useState } from "react"
 import { SeatIcon, SeatIconOff } from "../atom/seat"
 import useGestionSeatStore from "../useGestionSeatStore"
 import { Seat, UbicationSeatLabel } from "../utils/types"
+import { changeSeatPassenger } from "../services/services"
 
 // Class TOURIST - EXECUTIVE - FIRST_CLASS
 // Ubications WINDOW - CENTER - AISLE
@@ -26,8 +27,8 @@ export const colorClassSeat = {
 
 interface SeatRowProps {
   seat: Seat
-  selectSeat: (seat: string) => void
-  seatSelected: string
+  selectSeat: (seat: Seat) => void
+  seatSelected: Seat | undefined
 }
 
 interface TableSeatsProps {
@@ -40,12 +41,12 @@ const SeatRow = ({ seat, selectSeat, seatSelected }: SeatRowProps) => {
   const color = colorClassSeat[seat.seatClass]
   return (
     <div
-      // onClick={() => {
-      //   if (seat.seatClass.s) selectSeat(seat.name)
-      //   return
-      // }}
+      onClick={() => {
+        if (seat.seatStatus !== "AVAILABLE") return
+        selectSeat(seat)
+      }}
       className={`${
-        seat.tag === seatSelected && seat.seatStatus === "AVAILABLE"
+        seat.id === seatSelected?.id && seat.seatStatus === "AVAILABLE"
           ? "bg-blue-300/60 outline outline-1 outline-offset-4 outline-gray-200"
           : ""
       } grid w-full grid-cols-5 items-center gap-8 rounded-md py-2 transition-all hover:bg-gray-300/40 hover:outline hover:outline-1 hover:outline-offset-4 hover:outline-gray-200`}
@@ -62,12 +63,21 @@ const SeatRow = ({ seat, selectSeat, seatSelected }: SeatRowProps) => {
 }
 
 const TableSeats = ({ indexPassanger, listSeats, closeModal }: TableSeatsProps) => {
-  const [seatSelected, setSeatSelected] = useState<string>("")
-
-  console.log(listSeats)
+  const [seatSelected, setSeatSelected] = useState<Seat>()
+  const { actions } = useGestionSeatStore()
 
   const changeSeat = () => {
     console.log(seatSelected)
+    if (seatSelected) {
+      changeSeatPassenger(indexPassanger, seatSelected.id).then((response) => {
+        if (response.status) {
+          actions.updateSeatPassanger(indexPassanger, seatSelected)
+          alert("Se ha cambiado el asiento correctamente")
+        } else {
+          alert("Ha ocurrido un error al cambiar el asiento")
+        }
+      })
+    }
     closeModal()
   }
 

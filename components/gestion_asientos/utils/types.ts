@@ -12,17 +12,6 @@ export interface PassengerInfo {
   bookingId: number
 }
 
-/*
-
-"id": 61,
-      "tag": "A-1",
-      "seatStatus": "AVAILABLE",
-      "seatClass": "FIRST_CLASS",
-      "seatLocation": "WINDOW",
-      "seatNumber": 1,
-      "surcharge": 100000
-*/
-
 export interface Seat {
   id: number
   tag: string

@@ -28,7 +28,12 @@ const PassengerCell = ({ passanger }: Props) => {
         </section>
         <section className="flex items-center gap-4">
           <p className="text-xl font-bold text-gray-600">
-            {passanger.seat ? `$ ${passanger.seat.surcharge}` : "Sin asignar"}
+            {passanger.seat
+              ? `${new Intl.NumberFormat("es-CO", {
+                  style: "currency",
+                  currency: "COP",
+                }).format(passanger.seat.surcharge)}`
+              : "Sin asignar"}
           </p>
           <Seat seat={passanger.seat?.tag || ""} />
           <button
