@@ -3,20 +3,16 @@ import Seat from "../atom/seat"
 import SelectSeat from "../organism/select-seat"
 import useModal from "./modal/useModal"
 import Modal from "./modal/modal"
-import useGestionSeatStore from "../useGestionSeatStore"
+import { Passanger } from "../utils/types"
 
 interface Props {
-  index: number
-  name: string
-  seat: string
-  price?: number
+  passanger: Passanger
 }
 
-const PassengerCell = ({ ...props }: Props) => {
+const PassengerCell = ({ passanger }: Props) => {
   const { isOpen, openModal, closeModal } = useModal()
-  const { actions, listSeats } = useGestionSeatStore()
-  const { getPriceSeatSelect } = actions
-  const priceSeatSelect = getPriceSeatSelect(props.seat)
+
+  console.log("Imprimiendo --> ", passanger)
 
   return (
     <>
@@ -26,13 +22,15 @@ const PassengerCell = ({ ...props }: Props) => {
             <UserIcon className="h-6 w-6" />
           </div>
           <div className=" font-semibold text-gray-700">
-            <p className="-mb-1">{props.name}</p>
-            <span className=" text-sm font-normal">Pasajero {props.index}</span>
+            <p className="-mb-1">{passanger.name}</p>
+            <span className=" text-sm font-normal">Pasajero {passanger.index}</span>
           </div>
         </section>
         <section className="flex items-center gap-4">
-          {/* <p className="text-xl font-bold text-gray-600">{priceSeatSelect ? `$ ${priceSeatSelect}` : "Sin asignar"}</p> */}
-          <Seat seat={props.seat} />
+          <p className="text-xl font-bold text-gray-600">
+            {passanger.seat ? `$ ${passanger.seat.surcharge}` : "Sin asignar"}
+          </p>
+          <Seat seat={passanger.seat?.tag || ""} />
           <button
             onClick={openModal}
             className="rounded-md bg-blue-500/30 px-4 py-2 font-semibold text-blue-500 transition-all hover:shadow-lg"
@@ -43,7 +41,7 @@ const PassengerCell = ({ ...props }: Props) => {
       </article>
       {isOpen && (
         <Modal closeModal={closeModal}>
-          <SelectSeat namePassanger={props.name} indexPassanger={props.index} closeModal={closeModal} />
+          <SelectSeat namePassanger={passanger.name} indexPassanger={passanger.index} closeModal={closeModal} />
         </Modal>
       )}
     </>

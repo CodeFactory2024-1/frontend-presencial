@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { SeatIcon, SeatIconOff } from "../atom/seat"
-import { Seat, UbicationSeatLabel } from "../data.mock"
 import useGestionSeatStore from "../useGestionSeatStore"
+import { Seat, UbicationSeatLabel } from "../utils/types"
 
 // Class TOURIST - EXECUTIVE - FIRST_CLASS
 // Ubications WINDOW - CENTER - AISLE
@@ -31,44 +31,43 @@ interface SeatRowProps {
 }
 
 interface TableSeatsProps {
+  listSeats: Seat[]
   closeModal: () => void
   indexPassanger: number
 }
 
 const SeatRow = ({ seat, selectSeat, seatSelected }: SeatRowProps) => {
-  const color = colorClassSeat[seat.classSeat]
+  const color = colorClassSeat[seat.seatClass]
   return (
     <div
-      onClick={() => {
-        if (seat.available) selectSeat(seat.name)
-        return
-      }}
+      // onClick={() => {
+      //   if (seat.seatClass.s) selectSeat(seat.name)
+      //   return
+      // }}
       className={`${
-        seat.name === seatSelected && seat.available
+        seat.tag === seatSelected && seat.seatStatus === "AVAILABLE"
           ? "bg-blue-300/60 outline outline-1 outline-offset-4 outline-gray-200"
           : ""
       } grid w-full grid-cols-5 items-center gap-8 rounded-md py-2 transition-all hover:bg-gray-300/40 hover:outline hover:outline-1 hover:outline-offset-4 hover:outline-gray-200`}
     >
-      <div className="flex justify-center">{seat.available ? <SeatIcon /> : <SeatIconOff />}</div>
-      <div>{seat.name}</div>
-      <div>{UbicationSeatLabel[seat.ubication]}</div>
+      <div className="flex justify-center">{seat.seatStatus === "AVAILABLE" ? <SeatIcon /> : <SeatIconOff />}</div>
+      <div>{seat.tag}</div>
+      <div>{UbicationSeatLabel[seat.seatLocation]}</div>
       <div className={`rounded-full py-1 text-center text-xs font-semibold ${color}`}>
-        {LabelClassSeat[seat.classSeat]}
+        {LabelClassSeat[seat.seatClass]}
       </div>
-      <div>$ {seat.price}</div>
+      <div>$ {seat.surcharge}</div>
     </div>
   )
 }
 
-const TableSeats = ({ closeModal, indexPassanger }: TableSeatsProps) => {
+const TableSeats = ({ indexPassanger, listSeats, closeModal }: TableSeatsProps) => {
   const [seatSelected, setSeatSelected] = useState<string>("")
-  const { actions, listSeats } = useGestionSeatStore()
-  const { updatePassangerSeat, updateTotalToPay } = actions
+
+  console.log(listSeats)
 
   const changeSeat = () => {
     console.log(seatSelected)
-    updatePassangerSeat(indexPassanger, seatSelected)
-    updateTotalToPay()
     closeModal()
   }
 

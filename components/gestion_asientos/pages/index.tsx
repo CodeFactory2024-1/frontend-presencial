@@ -1,9 +1,10 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import MountPay from "../atom/mount"
-import { Seat } from "../data.mock"
-import { serviceGetSeats } from "../gestion-asientos.services"
 import Header from "../molecule/header"
 import PassengerList from "../organism/passanger-list"
+import { getBookingInfo } from "../services/services"
+import { BookingInfo } from "../utils/types"
+import useFetching from "../hooks/useStateFetch"
 import useGestionSeatStore from "../useGestionSeatStore"
 
 interface Props {
@@ -11,21 +12,41 @@ interface Props {
 }
 
 const GestionAsientosPage = ({ reserva }: Props) => {
-  // const { actions } = useGestionSeatStore()
-  // const { setListSeats } = actions
+  const [booking, setBooking] = useState<BookingInfo>()
+  const { isLoading, error, setError, setIsLoading } = useFetching()
+  const { actions } = useGestionSeatStore()
 
-  // const getSeats = async () => {
-  //   const res = await serviceGetSeats()
-  //   if (res.status) {
-  //     setListSeats(res.data as Seat[])
-  //     return
-  //   }
-  //   alert("Error al obtener los asientos")
-  // }
+  const getBooking = async () => {
+    setIsLoading(true)
+    const response = await getBookingInfo(reserva)
+    if (response.status) {
+      setBooking(response.data as BookingInfo)
+      setIsLoading(false)
+      actions.setBookingInfo(response.data as BookingInfo)
+      return
+    }
+    setError(response.data as string)
+  }
 
-  // useEffect(() => {
-  //   getSeats()
-  // }, [])
+  useEffect(() => {
+    getBooking()
+  }, [])
+
+  if (isLoading) {
+    return (
+      <main className="flex min-h-screen items-center justify-center">
+        <h1 className="text-4xl font-bold">Cargando...</h1>
+      </main>
+    )
+  }
+
+  if (error) {
+    return (
+      <main className="flex min-h-screen items-center justify-center">
+        <h1 className="text-4xl font-bold">{error}</h1>
+      </main>
+    )
+  }
 
   return (
     <main className="relative grid min-h-screen">
